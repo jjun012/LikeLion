@@ -2,6 +2,7 @@ package myFristSpring.HelloSpring.service;
 
 import lombok.RequiredArgsConstructor;
 import myFristSpring.HelloSpring.domain.Member;
+import myFristSpring.HelloSpring.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 @Service
