@@ -41,7 +41,7 @@ public class MemoryMemberRepository implements MemberRepository {
 
     @Override
     public void deleteMember(Member member) {
-
+        local.remove(member.getId());
     }
 
     @Override
