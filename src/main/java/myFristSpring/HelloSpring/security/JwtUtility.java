@@ -56,11 +56,12 @@ public class JwtUtility {
 
     // 토큰에서 클레임 추출
     public Claims getClaimsFromToken(String token) {
+        String newToken = token.substring(7);
         // JWT 토큰에서 정보를 추출 (예: userId, 생성 시간 등)
         return Jwts.parserBuilder()
                 .setSigningKey(key) // 서명 확인을 위한 키 설정
                 .build()
-                .parseClaimsJws(token) // 토큰 파싱 및 검증
+                .parseClaimsJws(newToken) // 토큰 파싱 및 검증
                 .getBody();  // 토큰의 페이로드에서 클레임 데이터 반환
     }
 }

@@ -25,7 +25,7 @@ public class MemberDTO {
 
     @Data
     @AllArgsConstructor
-    public static class MemberRes{
+    public static class MemberRes {
         private String userId;
         private String nickname;
     }

@@ -33,7 +33,8 @@ public class MemberService {
         return memberRepository.findByUserId(jwtUtility.getClaimsFromToken(token).getSubject());
     }
     public Member changeName(String token, String newNickname) {
-        Member member = memberRepository.findByUserId(token);
+        String userId = tokenToMember(token).getUserId();
+        Member member = memberRepository.findByUserId(userId);
         if (member == null) {
             return null;
         }
