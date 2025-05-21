@@ -53,6 +53,9 @@ public class MemberController {
         }
         return memberService.deleteMember(request.getUserId());
     }
-
+    @GetMapping("/member/all")
+    public List<Member> getAllMembers() {
+        return memberService.findAll();
+    }
 }
 

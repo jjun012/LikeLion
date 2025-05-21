@@ -5,13 +5,18 @@ import myFristSpring.HelloSpring.domain.Member;
 import myFristSpring.HelloSpring.repository.MemberRepository;
 import myFristSpring.HelloSpring.security.JwtUtility;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly=true)
 public class MemberService {
     private final MemberRepository memberRepository;
     private final JwtUtility jwtUtility;
 
+    @Transactional
     public Member signUp(String userId, String password, String nickname) {
         if (memberRepository.findByUserId(userId) != null) {
             return null;
@@ -32,6 +37,7 @@ public class MemberService {
     public Member tokenToMember(String token) {
         return memberRepository.findByUserId(jwtUtility.getClaimsFromToken(token).getSubject());
     }
+    @Transactional
     public Member changeName(String token, String newNickname) {
         String userId = tokenToMember(token).getUserId();
         Member member = memberRepository.findByUserId(userId);
@@ -45,7 +51,7 @@ public class MemberService {
     public Member findByUserId(String userId) {
         return memberRepository.findByUserId(userId);
     }
-
+    @Transactional
     public boolean deleteMember(String userId) {
         Member member = memberRepository.findByUserId(userId);
         if (member == null) {
@@ -53,5 +59,8 @@ public class MemberService {
         }
         memberRepository.deleteMember(member);
         return true;
+    }
+    public List<Member> findAll() {
+        return memberRepository.findAll();
     }
 }
