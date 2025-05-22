@@ -30,7 +30,9 @@ public class JpaArticleRepository implements ArticleRepository{
 
     @Override
     public Article findById(Long articleId) {
-        return em.find(Article.class,articleId);
+        return em.createQuery("select a from Article a join fetch a.writer where a.id = :id", Article.class)
+                .setParameter("id", articleId)
+                .getSingleResult();
     }
 
     @Override

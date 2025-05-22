@@ -24,14 +24,14 @@ public class ArticleController {
     public ArticleDTO.ArticleRes createArticle(@RequestHeader("Authorization") String token, @RequestBody ArticleDTO.AddArticleReq request){
         jwtUtility.validateToken(token);
         String userId = jwtUtility.getClaimsFromToken(token).getSubject();
-        Article article=articleService.addArticle(token, request.getTitle(),request.getContent());
+        Article article=articleService.addArticle(userId, request.getTitle(),request.getContent());
         return new ArticleDTO.ArticleRes(article);
     }
 
     @PutMapping("/article/update")
     public ArticleDTO.ArticleRes updateArticle(@RequestHeader("Authorization") String token, @RequestBody ArticleDTO.ArticleReq request){
         jwtUtility.validateToken(token);
-        Article article=articleService.updateArticle(request.getArticleId(),token, request.getTitle(), request.getContent());
+        Article article=articleService.updateArticle(request.getArticleId(), request.getTitle(), request.getContent(),token);
         return new ArticleDTO.ArticleRes(article);
 
     }

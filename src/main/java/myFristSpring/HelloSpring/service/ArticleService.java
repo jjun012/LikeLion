@@ -21,16 +21,16 @@ public class ArticleService {
     private final MemberService memberService;
 
     @Transactional
-    public Article addArticle(String writerId, String title, String content){
-        Member member=memberService.findByUserId(writerId);
-        Article article=new Article(title,content,member);
+    public Article addArticle(String userId, String title, String content) {
+        Member member = memberService.findByUserId(userId);
+        Article article = new Article(title, content, member);
         return articleRepository.saveArticle(article);
     }
 
     @Transactional
     public Article updateArticle(Long articleId, String title, String content, String token){
         Article article=articleRepository.findById(articleId);
-        Member member=memberService.findByUserId(token);
+        Member member=memberService.tokenToMember(token);
         if(article.getWriter()==member){
             article.update(title,content);
         }
