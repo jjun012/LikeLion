@@ -5,6 +5,8 @@ import myFristSpring.HelloSpring.domain.Article;
 import myFristSpring.HelloSpring.domain.Comment;
 import myFristSpring.HelloSpring.domain.Member;
 import myFristSpring.HelloSpring.exception.InvalidArticleIdException;
+import myFristSpring.HelloSpring.exception.InvalidComIdMemException;
+import myFristSpring.HelloSpring.exception.InvalidCommentIdException;
 import myFristSpring.HelloSpring.repository.CommentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,12 +37,16 @@ public class CommentService {
     @Transactional
     public Comment updateComment(Long commentId, String token, String content) {
         Comment comment = commentRepository.findById(commentId);
+        if (comment == null) {
+            throw new InvalidCommentIdException();
+        }
         Member member = memberService.tokenToMember(token);
-        if (comment.getWriter().equals(member)) {
-            comment.updateComment(content);
-            return comment;
-        } else
-            return null;
+        if (comment.getWriter() != (member)) {
+            throw new InvalidComIdMemException();
+        }
+        comment.updateComment(content);
+        return comment;
+
     }
 
     public List<Comment> articleToComments(Long articleId) {
@@ -49,13 +55,11 @@ public class CommentService {
     }
 
     @Transactional
-    public boolean deleteComment(Long commentId, String token) {
+    public void deleteComment(Long commentId, String token) {
         Comment comment = commentRepository.findById(commentId);
         Member member = memberService.tokenToMember(token);
         if (comment.getWriter().equals(member)) {
             commentRepository.deleteComment(comment);
-            return true;
-        }else
-            return false;
+        }
     }
 }

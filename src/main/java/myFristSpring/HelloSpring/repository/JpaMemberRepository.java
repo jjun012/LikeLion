@@ -1,6 +1,6 @@
 package myFristSpring.HelloSpring.repository;
 
-import jakarta.persistence.EntityManager;
+import jakarta.persistence.*;
 import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import myFristSpring.HelloSpring.domain.Member;

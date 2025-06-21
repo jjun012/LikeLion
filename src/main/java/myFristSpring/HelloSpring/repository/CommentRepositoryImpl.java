@@ -1,6 +1,6 @@
 package myFristSpring.HelloSpring.repository;
 
-import jakarta.persistence.EntityManager;
+import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
 import myFristSpring.HelloSpring.domain.Article;
 import myFristSpring.HelloSpring.domain.Comment;
@@ -17,7 +17,7 @@ public class CommentRepositoryImpl implements CommentRepository {
 
     @Override
     public Comment addComment(Comment comment) {
-        this.em.persist(comment);
+        em.persist(comment);
         return comment;
     }
 

@@ -44,7 +44,7 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.OK).body(new CommentDTO.ResComment(comment));
     }
 
-    @GetMapping("/co    mment/article/{id}")
+    @GetMapping("/comment/article/{id}")
     public ResponseEntity<List<CommentDTO.ResComment>> articleComments(@PathVariable("id") Long articleId){
         return ResponseEntity.status(HttpStatus.OK).body(
                 commentService.articleToComments(articleId)
